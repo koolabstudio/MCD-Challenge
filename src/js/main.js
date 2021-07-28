@@ -1,9 +1,28 @@
+async function loopFiles() {
+  try {
+    let data = [];
+    for (let index = 1; index < 15; index++) {
+      try {
+        const response = await fetch(`/src/data/user-${index}.json`);
+        const responseJson = await response.json();
+        if (responseJson) {
+          data.push(responseJson.data[0]);
+        }
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    }
+    return Promise.resolve(data);
+  } catch (error) {
+    return Promise.reject(console.log(`File not found. Error: ${error}`));
+  }
+}
+
 async function getData(fileName) {
   try {
-    const response = await fetch(`/src/data/${fileName}`);
-    const responseJson = await response.json();
-    if (responseJson) {
-      return Promise.resolve(responseJson.data);
+    const response = await loopFiles();
+    if (response) {
+      return Promise.resolve(response);
     } else {
       return Promise.reject('Data not found');
     }
