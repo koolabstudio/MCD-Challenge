@@ -36,8 +36,8 @@ async function renderDataList(fileName, targetElement) {
     const data = await getData(fileName);
     if (data) {
       data.forEach((item, index) => {
-        // console.log(item)
-        document.getElementById(targetElement).innerHTML += `
+        const el = document.getElementById(targetElement);
+        el.innerHTML = `
           <li>
             <article>
               <h3>
@@ -55,15 +55,15 @@ async function renderDataList(fileName, targetElement) {
               <div>
                 Slicing result:
                 <a
-                  href="https://github.com/${item.slicingUrl}"
+                  href="${item.slicingUrl}"
                   target="_blank"
                 >
-                  @${item.slicingUrl}
+                  ${item.slicingUrl}
                 </a>
               </div>
             </article>
           </li>
-        `;
+        ` + el.innerHTML;
       });
     }
   } catch (error) {
